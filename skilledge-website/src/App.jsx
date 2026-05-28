@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 const COURSES = [
   { icon: "👗", title: "Fashion Designing", category: "Creative Arts", desc: "Sketch, drape, and design garments with industry-level skills in pattern making and styling." },
@@ -76,7 +76,6 @@ export default function App() {
   const [activePlacementCategory, setActivePlacementCategory] = useState("All");
   const [showEnquiry, setShowEnquiry] = useState(false);
   const [showPlacement, setShowPlacement] = useState(false);
-  const [selectedPlacementCourse, setSelectedPlacementCourse] = useState("");
   const [form, setForm] = useState({ name: "", phone: "", email: "", course: "", message: "" });
   const [placementForm, setPlacementForm] = useState({ name: "", phone: "", email: "", course: "", experience: "", location: "", message: "" });
   const [submitted, setSubmitted] = useState(false);
@@ -91,17 +90,11 @@ export default function App() {
   }, []);
 
   const filteredCourses = activeCategory === "All" ? COURSES : COURSES.filter(c => c.category === activeCategory);
-  const filteredPlacements = activePlacementCategory === "All" ? PLACEMENT_SECTORS : PLACEMENT_SECTORS.filter(p => {
-    const map = { "Creative Arts": ["Fashion Designing","Animation & VFX","Graphic Designing"], "Technology": ["Cyber Security","IT Education"], "Hospitality": ["Hotel Management","Front Desk Operations","Housekeeping","Food & Beverage","Cooking – Continental"], "Technical Trades": ["Refrigeration & AC"], "Soft Skills": ["Language Learning"] };
-    return map[activePlacementCategory]?.some(t => p.title.includes(t.split(" ")[0]));
-  });
 
   const scrollTo = (id) => { document.getElementById(id)?.scrollIntoView({ behavior: "smooth" }); setMenuOpen(false); };
   const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true); };
   const handlePlacementSubmit = (e) => { e.preventDefault(); setPlacementSubmitted(true); };
-
   const openPlacementForm = (courseTitle = "") => {
-    setSelectedPlacementCourse(courseTitle);
     setPlacementForm(f => ({ ...f, course: courseTitle }));
     setShowPlacement(true);
   };
@@ -160,9 +153,7 @@ export default function App() {
           .mobile-menu-btn { display: flex !important; }
           .two-col { grid-template-columns: 1fr !important; }
         }
-        @media (max-width: 480px) {
-          .stats-row { grid-template-columns: 1fr 1fr !important; }
-        }
+        @media (max-width: 480px) { .stats-row { grid-template-columns: 1fr 1fr !important; } }
         .mobile-menu-btn { display: none; }
       `}</style>
 
@@ -211,7 +202,7 @@ export default function App() {
       </nav>
 
       {/* HERO */}
-      <section id="home" style={{ background: "linear-gradient(160deg, #0B1F4B 0%, #16305E 55%, #1E3A70 100%)", color: "#fff", padding: "72px 24px 80px", position: "relative", overflow: "hidden" }}>
+      <section id="home" style={{ background: "linear-gradient(120deg, #041742 0%, #110232 60%, #011130 100%)", color: "#fff", padding: "72px 24px 80px", position: "relative", overflow: "hidden" }}>
         <div style={{ position: "absolute", inset: 0, backgroundImage: "radial-gradient(circle at 80% 20%, rgba(200,150,12,.12) 0%, transparent 50%), radial-gradient(circle at 10% 80%, rgba(19,136,8,.08) 0%, transparent 40%)", pointerEvents: "none" }} />
         <div style={{ maxWidth: 1240, margin: "0 auto", position: "relative", zIndex: 1 }}>
           <div className="hero-flex" style={{ display: "flex", alignItems: "center", gap: 64, flexWrap: "wrap" }}>
@@ -228,7 +219,7 @@ export default function App() {
                 Empowering India's<br /><span style={{ color: "#F0B429" }}>Youth Through</span><br />Skill Development
               </h1>
               <div style={{ width: 56, height: 3, background: "linear-gradient(90deg, #FF9933, #F0B429)", borderRadius: 2, marginBottom: 20 }} />
-              <p style={{ fontSize: 16, color: "#A8BBDA", lineHeight: 1.85, marginBottom: 32, maxWidth: 520 }}>
+              <p style={{ fontSize: 16, color: "#99baee", lineHeight: 1.85, marginBottom: 32, maxWidth: 520 }}>
                 A government-backed initiative offering free, NSDC-certified vocational training across 13 disciplines with career support, grooming, and end-to-end placement for every student.
               </p>
               <div style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
@@ -236,10 +227,10 @@ export default function App() {
                 <button className="btn-outline" style={{ borderColor: "rgba(255,255,255,.4)", color: "#fff", fontSize: 14 }} onClick={() => scrollTo("courses")}>View Programmes</button>
               </div>
               <div className="stats-row" style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 24, marginTop: 44, paddingTop: 36, borderTop: "1px solid rgba(255,255,255,.1)" }}>
-                {[["10,000+","Students Trained"],["13","Skill Programmes"],["95%","Placement Rate"],["Free","Lifetime Certification"]].map(([n, l]) => (
+                {[["10,000+","Students Trained"],["13+","Skill Programmes"],["95%","Placement Rate"],["Free","Lifetime Certification"]].map(([n, l]) => (
                   <div key={l}>
                     <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 700, color: "#F0B429" }}>{n}</div>
-                    <div style={{ fontSize: 12, color: "#8FA0C0", marginTop: 2, lineHeight: 1.4 }}>{l}</div>
+                    <div style={{ fontSize: 15, color: "#8FA0C0", marginTop: 2, lineHeight: 1.4 }}>{l}</div>
                   </div>
                 ))}
               </div>
@@ -247,21 +238,21 @@ export default function App() {
             <div style={{ flex: "0 0 300px", minWidth: 260 }}>
               <div style={{ background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 8, overflow: "hidden" }}>
                 <div style={{ background: "#C8960C", padding: "14px 20px" }}>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: "#fff", letterSpacing: 2, textTransform: "uppercase" }}>Official Affiliations</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: "#fff", letterSpacing: 2, textTransform: "uppercase" }}>Official Affiliations</div>
                 </div>
                 <div style={{ padding: "20px" }}>
                   {[
-                    { abbr: "NSDC", full: "National Skill Development Corporation", color: "#4FC3F7" },
-                    { abbr: "CII", full: "Confederation of Indian Industry", color: "#81C784" },
+                    { abbr: "NSDC", full: "National Skill Development Corporation", color: "#37baf7" },
+                    { abbr: "CII", full: "Confederation of Indian Industry", color: "#4db252" },
                     { abbr: "MoSDE", full: "Ministry of Skill Development & Entrepreneurship", color: "#FFB74D" },
                   ].map(a => (
                     <div key={a.abbr} style={{ padding: "14px 0", borderBottom: "1px solid rgba(255,255,255,.07)", display: "flex", gap: 12, alignItems: "flex-start" }}>
                       <div style={{ minWidth: 52, height: 32, background: "rgba(255,255,255,.08)", borderRadius: 4, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 11, fontWeight: 700, color: a.color }}>{a.abbr}</div>
-                      <div style={{ fontSize: 12, color: "#A8BBDA", lineHeight: 1.5 }}>{a.full}</div>
+                      <div style={{ fontSize: 13, color: "#9ebff4", lineHeight: 1.5 }}>{a.full}</div>
                     </div>
                   ))}
                   <div style={{ marginTop: 16 }}>
-                    <div style={{ fontSize: 11, color: "#8FA0C0", letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Admissions Open</div>
+                    <div style={{ fontSize: 13, color: "#94b2e9", letterSpacing: 1, textTransform: "uppercase", marginBottom: 10 }}>Admissions Open</div>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#fff", marginBottom: 6 }}>
                       <span>Session</span><span style={{ color: "#F0B429", fontWeight: 600 }}>2026–27</span>
                     </div>
@@ -269,7 +260,7 @@ export default function App() {
                       <span>Registration</span><span style={{ color: "#81C784", fontWeight: 600 }}>Open</span>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between", fontSize: 13, color: "#fff" }}>
-                      <span>Course Fee</span><span style={{ color: "#F0B429", fontWeight: 700 }}>₹ 0 - Free</span>
+                      <span>Course Fee</span><span style={{ color: "#F0B429", fontWeight: 700 }}>₹ 0 — Free</span>
                     </div>
                     <button className="btn-gold" style={{ width: "100%", marginTop: 16 }} onClick={() => setShowEnquiry(true)}>Register Now →</button>
                   </div>
@@ -283,7 +274,7 @@ export default function App() {
       {/* COURSES */}
       <section id="courses" style={{ padding: "80px 24px", background: "#F5F6FA" }}>
         <div style={{ maxWidth: 1240, margin: "0 auto" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 24, marginBottom: 40 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 24, marginBottom: 50 }}>
             <div>
               <div className="section-eyebrow">Our Programmes</div>
               <h2 className="section-title">Skill Development<br />Courses</h2>
@@ -343,29 +334,19 @@ export default function App() {
         </div>
       </section>
 
-      {/* ===================== PLACEMENT SECTION ===================== */}
+      {/* PLACEMENT */}
       <section id="placement" style={{ padding: "80px 24px", background: "#F5F6FA" }}>
         <div style={{ maxWidth: 1240, margin: "0 auto" }}>
-
-          {/* Header */}
           <div style={{ textAlign: "center", marginBottom: 52 }}>
             <div className="section-eyebrow">Career & Employment Cell</div>
             <h2 className="section-title">Placement Support<br />Programme</h2>
             <div className="title-rule" style={{ margin: "16px auto 20px" }} />
-            <p className="section-sub" style={{ maxWidth: 620, margin: "0 auto" }}>
-              Whether you've completed training with us or already have a skill — apply directly for free placement support. We connect you to verified employers across all sectors.
-            </p>
+            <p className="section-sub" style={{ maxWidth: 620, margin: "0 auto" }}>Whether you've completed training with us or already have a skill — apply directly for free placement support. We connect you to verified employers across all sectors.</p>
           </div>
 
-          {/* Placement Stats */}
+          {/* Stats */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 16, marginBottom: 56 }}>
-            {[
-              { n: "95%", l: "Placement Rate", icon: "📈" },
-              { n: "50+", l: "Industry Partners", icon: "🏢" },
-              { n: "500+", l: "Jobs Per Year", icon: "💼" },
-              { n: "30", l: "Days Avg. Placement", icon: "📅" },
-              { n: "₹0", l: "Zero Cost Ever", icon: "✅" },
-            ].map(s => (
+            {[{ n: "95%", l: "Placement Rate", icon: "📈" },{ n: "50+", l: "Industry Partners", icon: "🏢" },{ n: "500+", l: "Jobs Per Year", icon: "💼" },{ n: "30", l: "Days Avg. Placement", icon: "📅" },{ n: "₹0", l: "Zero Cost Ever", icon: "✅" }].map(s => (
               <div key={s.l} style={{ background: "#fff", border: "1px solid #DDE3F0", borderTop: "3px solid #C8960C", borderRadius: 6, padding: "22px 16px", textAlign: "center" }}>
                 <div style={{ fontSize: 26, marginBottom: 8 }}>{s.icon}</div>
                 <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 32, fontWeight: 700, color: "#0B1F4B" }}>{s.n}</div>
@@ -374,14 +355,13 @@ export default function App() {
             ))}
           </div>
 
-          {/* Company Logo Scroller */}
+          {/* Company Scroller */}
           <div style={{ marginBottom: 56 }}>
             <div style={{ textAlign: "center", marginBottom: 24 }}>
               <div className="section-eyebrow">Our Hiring Partners</div>
               <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 28, fontWeight: 700, color: "#0B1F4B" }}>Trusted by India's Top Employers</h3>
             </div>
             <div style={{ background: "#fff", border: "1px solid #DDE3F0", borderRadius: 8, padding: "28px 0", overflow: "hidden", position: "relative" }}>
-              {/* fade edges */}
               <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(90deg, #fff, transparent)", zIndex: 2 }} />
               <div style={{ position: "absolute", right: 0, top: 0, bottom: 0, width: 80, background: "linear-gradient(-90deg, #fff, transparent)", zIndex: 2 }} />
               <div style={{ overflow: "hidden" }}>
@@ -399,7 +379,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Placement Cards by Sector */}
+          {/* Placement Cards */}
           <div style={{ marginBottom: 48 }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", flexWrap: "wrap", gap: 20, marginBottom: 32 }}>
               <div>
@@ -434,21 +414,14 @@ export default function App() {
             </div>
           </div>
 
-          {/* Placement Process */}
+          {/* Process */}
           <div style={{ background: "#fff", border: "1px solid #DDE3F0", borderRadius: 8, overflow: "hidden", marginBottom: 48 }}>
             <div style={{ background: "#0B1F4B", padding: "20px 28px" }}>
               <div style={{ fontSize: 11, fontWeight: 700, color: "#F0B429", letterSpacing: 2, textTransform: "uppercase" }}>How It Works</div>
               <div style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 22, fontWeight: 700, color: "#fff", marginTop: 4 }}>6-Step Placement Process</div>
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", gap: 0 }}>
-              {[
-                { step: "01", icon: "📝", title: "Submit Application", desc: "Fill the placement form with your details and preferred sector." },
-                { step: "02", icon: "📞", title: "Counsellor Call", desc: "Our placement officer contacts you within 24 hours." },
-                { step: "03", icon: "📄", title: "Resume Building", desc: "We help craft a professional resume for your target role." },
-                { step: "04", icon: "🎯", title: "Interview Prep", desc: "Mock interviews, HR coaching and grooming sessions." },
-                { step: "05", icon: "🏢", title: "Job Matching", desc: "We match your profile with 50+ industry partners." },
-                { step: "06", icon: "✅", title: "Placement Confirmed", desc: "Offer letter received — we follow up till you join." },
-              ].map((s, i) => (
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))" }}>
+              {[{ step: "01", icon: "📝", title: "Submit Application", desc: "Fill the placement form with your details and preferred sector." },{ step: "02", icon: "📞", title: "Counsellor Call", desc: "Our placement officer contacts you within 24 hours." },{ step: "03", icon: "📄", title: "Resume Building", desc: "We help craft a professional resume for your target role." },{ step: "04", icon: "🎯", title: "Interview Prep", desc: "Mock interviews, HR coaching and grooming sessions." },{ step: "05", icon: "🏢", title: "Job Matching", desc: "We match your profile with 50+ industry partners." },{ step: "06", icon: "✅", title: "Placement Confirmed", desc: "Offer letter received — we follow up till you join." }].map((s, i) => (
                 <div key={s.step} style={{ padding: "24px 18px", borderRight: i < 5 ? "1px solid #EEF0F8" : "none", textAlign: "center" }}>
                   <div style={{ width: 34, height: 34, background: "#0B1F4B", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 10, fontWeight: 700, color: "#F0B429", margin: "0 auto 10px", letterSpacing: 1 }}>{s.step}</div>
                   <div style={{ fontSize: 24, marginBottom: 8 }}>{s.icon}</div>
@@ -459,16 +432,15 @@ export default function App() {
             </div>
           </div>
 
-          {/* Big CTA */}
+          {/* CTA */}
           <div style={{ background: "linear-gradient(135deg, #0B1F4B, #1E3A70)", borderRadius: 10, padding: "48px 40px", display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 28 }}>
             <div>
               <div style={{ fontSize: 11, color: "#F0B429", fontWeight: 700, letterSpacing: 2, textTransform: "uppercase", marginBottom: 10 }}>Career & Employment Cell — ABVVK</div>
               <h3 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(22px, 3vw, 34px)", fontWeight: 700, color: "#fff", marginBottom: 10 }}>Already Have a Skill? Start Your Career Today.</h3>
-              <p style={{ fontSize: 14, color: "#A8BBDA", maxWidth: 520, lineHeight: 1.7 }}>No training needed — apply directly for placement support. Our placement officers will match you with the right employer across 12 sectors, completely free of cost.</p>
+              <p style={{ fontSize: 14, color: "#A8BBDA", maxWidth: 520, lineHeight: 1.7 }}>No training needed — apply directly for placement support. Our placement officers will match you with the right employer, completely free of cost.</p>
             </div>
             <button className="btn-gold" style={{ fontSize: 14, padding: "15px 36px", whiteSpace: "nowrap" }} onClick={() => openPlacementForm("")}>Apply for Placement — Free →</button>
           </div>
-
         </div>
       </section>
 
@@ -480,12 +452,8 @@ export default function App() {
               <div className="section-eyebrow">About the Initiative</div>
               <h2 className="section-title">A National Mission<br />for Skill India</h2>
               <div className="title-rule" />
-              <p style={{ fontSize: 15, color: "#5C6B8A", lineHeight: 1.85, marginBottom: 16 }}>
-                Atal Bihari Vajpayee Kaushalya Vikas Kendra is a government-backed skill development initiative operating in partnership with the National Skill Development Corporation (NSDC) and the Confederation of Indian Industry (CII). Our mission is to eliminate barriers between talent and opportunity.
-              </p>
-              <p style={{ fontSize: 15, color: "#5C6B8A", lineHeight: 1.85, marginBottom: 28 }}>
-                We deliver industry-grade vocational training across 13 disciplines — completely free of cost — to youth from all socioeconomic backgrounds, ensuring that no financial constraint impedes a student's growth.
-              </p>
+              <p style={{ fontSize: 15, color: "#5C6B8A", lineHeight: 1.85, marginBottom: 16 }}>Atal Bihari Vajpayee Kaushalya Vikas Kendra is a government-backed skill development initiative operating in partnership with the National Skill Development Corporation (NSDC) and the Confederation of Indian Industry (CII). Our mission is to eliminate barriers between talent and opportunity.</p>
+              <p style={{ fontSize: 15, color: "#5C6B8A", lineHeight: 1.85, marginBottom: 28 }}>We deliver industry-grade vocational training across 13 disciplines — completely free of cost — to youth from all socioeconomic backgrounds, ensuring that no financial constraint impedes a student's growth.</p>
               {["NSDC-certified courses recognised nationwide","Industry expert faculty and mentors","Dedicated placement cell with live industry connections","Post-training grooming and confidence development","Internship, apprenticeship and job placement","Certificate valid across all Indian employers"].map(p => (
                 <div key={p} className="check-item">
                   <div className="check-icon"><span style={{ color: "#C8960C", fontSize: 12, fontWeight: 700 }}>✓</span></div>
@@ -574,9 +542,7 @@ export default function App() {
                   <div style={{ fontSize: 9, color: "#C8960C", fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase", marginTop: 2 }}>Mumbai — Skill Development Initiative</div>
                 </div>
               </div>
-              <p style={{ fontSize: 13, color: "#8FA0C0", lineHeight: 1.8, maxWidth: 320, marginBottom: 20 }}>
-                A government-backed initiative empowering India's youth through free, NSDC-certified vocational training, grooming, and guaranteed placement support.
-              </p>
+              <p style={{ fontSize: 13, color: "#8FA0C0", lineHeight: 1.8, maxWidth: 320, marginBottom: 20 }}>A government-backed initiative empowering India's youth through free, NSDC-certified vocational training, grooming, and guaranteed placement support.</p>
               <div style={{ display: "flex", gap: 8 }}>
                 {["F","T","in","▶"].map((s, i) => (
                   <div key={i} style={{ width: 34, height: 34, borderRadius: 4, background: "rgba(255,255,255,.06)", border: "1px solid rgba(255,255,255,.1)", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", fontSize: 13, color: "#8FA0C0", fontWeight: 700, transition: "all .2s" }}
@@ -620,7 +586,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* ADMISSION ENQUIRY MODAL */}
+      {/* ADMISSION MODAL */}
       {showEnquiry && (
         <div className="overlay" onClick={e => { if (e.target === e.currentTarget) { setShowEnquiry(false); setSubmitted(false); } }}>
           <div className="modal">
@@ -629,7 +595,7 @@ export default function App() {
               <div style={{ textAlign: "center", padding: "16px 0" }}>
                 <div style={{ width: 64, height: 64, background: "#E8F5E9", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30, margin: "0 auto 20px" }}>✅</div>
                 <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, fontWeight: 700, color: "#0B1F4B", marginBottom: 10 }}>Application Submitted</h2>
-                <p style={{ color: "#5C6B8A", fontSize: 14, lineHeight: 1.75, marginBottom: 24 }}>Thank you. Our admissions team will contact you within 24 working hours to guide you through the next steps.</p>
+                <p style={{ color: "#5C6B8A", fontSize: 14, lineHeight: 1.75, marginBottom: 24 }}>Thank you. Our admissions team will contact you within 24 working hours.</p>
                 <div style={{ background: "#FEF3C7", border: "1px solid #F0B429", borderRadius: 6, padding: "12px 16px", fontSize: 13, color: "#92400E", marginBottom: 24, textAlign: "left" }}>
                   <strong>Reference ID:</strong> ADM-{Math.random().toString(36).slice(2,8).toUpperCase()}<br />Please save this for your records.
                 </div>
@@ -669,7 +635,7 @@ export default function App() {
                     <textarea rows={3} className="form-input" placeholder="Any specific requirements or questions..." value={form.message} onChange={e => setForm({ ...form, message: e.target.value })} style={{ resize: "vertical" }} />
                   </div>
                   <div style={{ background: "#F0F4FF", border: "1px solid #C5D0E8", borderRadius: 4, padding: "10px 14px", fontSize: 12, color: "#3A4F7A", marginBottom: 18 }}>
-                    ℹ️ Your information is handled in accordance with the Government of India data protection guidelines and will not be shared with third parties.
+                    ℹ️ Your information is handled in accordance with Government of India data protection guidelines.
                   </div>
                   <button className="btn-primary" type="submit" style={{ width: "100%", padding: "14px", fontSize: 14 }}>Submit Application →</button>
                 </form>
@@ -688,7 +654,7 @@ export default function App() {
               <div style={{ textAlign: "center", padding: "16px 0" }}>
                 <div style={{ width: 64, height: 64, background: "#E8F5E9", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30, margin: "0 auto 20px" }}>✅</div>
                 <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: 26, fontWeight: 700, color: "#0B1F4B", marginBottom: 10 }}>Placement Application Received</h2>
-                <p style={{ color: "#5C6B8A", fontSize: 14, lineHeight: 1.75, marginBottom: 24 }}>Our placement officer will contact you within 24 working hours to discuss suitable opportunities and next steps.</p>
+                <p style={{ color: "#5C6B8A", fontSize: 14, lineHeight: 1.75, marginBottom: 24 }}>Our placement officer will contact you within 24 working hours.</p>
                 <div style={{ background: "#FEF3C7", border: "1px solid #F0B429", borderRadius: 6, padding: "12px 16px", fontSize: 13, color: "#92400E", marginBottom: 24, textAlign: "left" }}>
                   <strong>Reference ID:</strong> PLT-{Math.random().toString(36).slice(2,8).toUpperCase()}<br />Please save this for your records.
                 </div>
